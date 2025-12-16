@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    double A;
+    printf("Введите число A: ");
+    scanf("%lf", &A);
+
+    double x, y;
+
+    // 1) A^2
+    x = A * A;
+    printf("A^2 = %.6g\n", x);
+
+    // 2) A^3 = A^2 * A
+    y = x * A;
+    printf("A^3 = %.6g\n", y);
+
+    // 3) A^5 = A^3 * A^2
+    x = y * x;  // x теперь A^5
+    printf("A^5 = %.6g\n", x);
+
+    // 4) A^10 = (A^5)^2
+    y = x * x;  // y теперь A^10
+    printf("A^10 = %.6g\n", y);
+
+    // 5) A^15 = A^10 * A^5
+    x = y * x;  // x теперь A^15
+    printf("A^15 = %.6g\n", x);
+
+    return 0;
+}
+
+
+
+
+
