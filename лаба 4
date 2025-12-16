@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int year;
+    printf("Введите номер года: ");
+    scanf("%d", &year);
+
+    // Проверка корректности (по условию — положительное целое)
+    if (year <= 0) {
+        printf("Год должен быть положительным целым числом.\n");
+        return 1;
+    }
+
+    int isLeap = (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
+    int days = isLeap ? 366 : 365;
+
+    printf("Количество дней в %d году: %d\n", year, days);
+    return 0;
+}
