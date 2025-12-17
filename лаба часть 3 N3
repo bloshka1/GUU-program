@@ -1,0 +1,83 @@
+#include <stdio.h>
+
+// Процедура RemoveRowCol
+// A — матрица (одномерный массив, эмулирующий 2D)
+// M, N — указатели на размеры (вход/выход)
+// K, L — номера строки и столбца для удаления (нумерация с 1)
+void RemoveRowCol(double A[], int *M, int *N, int K, int L) {
+    int rows = *M;
+    int cols = *N;
+
+    // Проверка корректности K и L (нумерация с 1)
+    if (K < 1 || K > rows || L < 1 || L > cols) {
+        return; // ничего не удаляем
+    }
+
+    // Переводим в индексы C (с 0)
+    int delRow = K - 1;
+    int delCol = L - 1;
+
+    int newRow = 0;
+    // Проходим по всем строкам, кроме удаляемой
+    for (int i = 0; i < rows; i++) {
+        if (i == delRow) continue;
+
+        int newCol = 0;
+        for (int j = 0; j < cols; j++) {
+            if (j == delCol) continue;
+
+            // Записываем элемент в новую позицию
+            A[newRow * (cols - 1) + newCol] = A[i * cols + j];
+            newCol++;
+        }
+        newRow++;
+    }
+
+    // Обновляем размеры
+    *M = rows - 1;
+    *N = cols - 1;
+}
+
+int main() {
+    int M, N;
+    printf("Введите M и N (размеры матрицы, M>1, N>1): ");
+    scanf("%d %d", &M, &N);
+
+    if (M <= 1 || N <= 1) {
+        printf("Ошибка: M и N должны быть больше 1.\n");
+        return 1;
+    }
+
+    // Выделяем память под матрицу как одномерный массив
+    double A[100][100]; // или double A[100*100]; но проще работать с [100][100]
+    // Но так как функция принимает double[], скопируем в линейный массив
+    double linear[10000];
+
+    printf("Введите элементы матрицы (%d x %d):\n", M, N);
+    int idx = 0;
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            scanf("%lf", &A[i][j]);
+            linear[idx++] = A[i][j];
+        }
+    }
+
+    int K, L;
+    printf("Введите K и L (номера строки и столбца для удаления, начиная с 1): ");
+    scanf("%d %d", &K, &L);
+
+    // Вызываем процедуру
+    RemoveRowCol(linear, &M, &N, K, L);
+
+    // Вывод результата
+    printf("\nНовый размер матрицы: %d x %d\n", M, N);
+    printf("Результирующая матрица:\n");
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%8.3f ", linear[i * N + j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
