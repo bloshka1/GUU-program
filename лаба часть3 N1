@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+// Процедура PowerA3: вычисляет A^3 и сохраняет результат в *B
+void PowerA3(double A, double *B) {
+    *B = A * A * A;
+}
+
+int main() {
+    double numbers[5];
+    double cubes[5];
+
+    printf("Введите 5 вещественных чисел:\n");
+    for (int i = 0; i < 5; i++) {
+        scanf("%lf", &numbers[i]);
+    }
+
+    // Вычисляем кубы с помощью PowerA3
+    for (int i = 0; i < 5; i++) {
+        PowerA3(numbers[i], &cubes[i]);
+    }
+
+    // Вывод результата
+    printf("Третьи степени (кубы) чисел:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%.6g\n", cubes[i]);
+    }
+
+    return 0;
+}
