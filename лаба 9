@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int M, N;
+    printf("Введите M и N (размеры матрицы): ");
+    scanf("%d %d", &M, &N);
+
+    if (M <= 0 || N <= 0) {
+        printf("Размеры должны быть положительными.\n");
+        return 1;
+    }
+
+    int A[100][100]; // ограничим размер (по условию не задан, но разумно)
+    printf("Введите элементы матрицы (%d x %d):\n", M, N);
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            scanf("%d", &A[i][j]);
+        }
+    }
+
+    // Проверяем последний столбец (индекс N-1)
+    int lastColAllNegative = 1; // предполагаем, что да
+    for (int i = 0; i < M; i++) {
+        if (A[i][N - 1] >= 0) {
+            lastColAllNegative = 0;
+            break;
+        }
+    }
+
+    // Определяем, сколько столбцов выводить
+    int colsToPrint = N;
+    if (lastColAllNegative) {
+        colsToPrint = N - 1;
+    }
+
+    // Вывод результата
+    printf("Результат:\n");
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < colsToPrint; j++) {
+            printf("%d ", A[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
