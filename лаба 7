@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int A, B, C;
+    printf("Введите A, B, C (положительные целые числа): ");
+    scanf("%d %d %d", &A, &B, &C);
+
+    // Проверка на положительность
+    if (A <= 0 || B <= 0 || C <= 0) {
+        printf("Все числа должны быть положительными.\n");
+        return 1;
+    }
+
+    // Подсчёт, сколько квадратов влезает по стороне A
+    int countA = 0;
+    int temp = A;
+    while (temp >= C) {
+        temp -= C;
+        countA++;
+    }
+
+    // Подсчёт по стороне B
+    int countB = 0;
+    temp = B;
+    while (temp >= C) {
+        temp -= C;
+        countB++;
+    }
+
+    // Умножение countA * countB через сложение
+    int total = 0;
+    for (int i = 0; i < countA; i++) {
+        total += countB;
+    }
+
+    printf("Количество квадратов: %d\n", total);
+    return 0;
+}
