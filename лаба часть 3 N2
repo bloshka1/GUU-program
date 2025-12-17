@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <math.h>
+
+// Функция Ln1(x, eps): приближённое значение ln(1 + x)
+double Ln1(double x, double eps) {
+    double sum = 0.0;
+    double term = x;        // первое слагаемое: x^1 / 1 = x
+    int n = 1;              // номер слагаемого (начинаем с 1)
+
+    while (fabs(term) > eps) {
+        sum += term;
+        // Готовим следующее слагаемое:
+        // term_{n+1} = -term_n * x * n / (n + 1)
+        term = -term * x * n / (n + 1);
+        n++;
+    }
+
+    return sum;
+}
+
+int main() {
+    double x;
+    printf("Введите x (|x| < 1): ");
+    scanf("%lf", &x);
+
+    if (fabs(x) >= 1.0) {
+        printf("Ошибка: |x| должно быть меньше 1.\n");
+        return 1;
+    }
+
+    double epsilons[6];
+    printf("Введите 6 значений epsilon (> 0):\n");
+    for (int i = 0; i < 6; i++) {
+        scanf("%lf", &epsilons[i]);
+        if (epsilons[i] <= 0) {
+            printf("Ошибка: epsilon должно быть положительным.\n");
+            return 1;
+        }
+    }
+
+    printf("\nПриближённые значения ln(1 + x):\n");
+    for (int i = 0; i < 6; i++) {
+        double approx = Ln1(x, epsilons[i]);
+        printf("eps = %.1e -> ln(1+x) ≈ %.10f\n", epsilons[i], approx);
+    }
+
+    // Для сравнения — точное значение
+    printf("\nТочное значение (через log): %.10f\n", log(1 + x));
+
+    return 0;
+}
